@@ -1,5 +1,6 @@
 #!/bin/bash
 #Update and Upgrade of the system only if update has been run without problem
+clear;
 function UpdateSystem(){
 	echo "Update System" >> logs
 	apt-get update >> logs && apt-get upgrade -y >> logs
@@ -45,13 +46,13 @@ function ConfigNRPE(){
 function NRPEPlugins(){
 	echo "Install NRPE plugins for NRPE" >> logs
 	apt-get install -y autoconf automake gcc libc6 libmcrypt-dev make libssl-dev wget bc gawk dc build-essential snmp libnet-snmp-perk gettext >> logs
-	cd /tmp
+	cd /tmp || exit
 	wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.2.1.tar.gz >> logs
 	tar zxf nagios-plugins.tar.gz >> logs
 }
 
 function ConfigNRPEPlugins(){
-	cd /tmp/nagios-plugins-release-2.2.1/
+	cd /tmp/nagios-plugins-release-2.2.1/ || exit
 	./tools/setup >> logs
 	./configure >> logs
 	make >> logs
@@ -64,20 +65,17 @@ function ConfSudoers(){
 }
 function CopyScripts(){
 	echo "Installation des scripts wazo/xivo" >> logs
-	cd /tmp/ScriptWazoXivoDeploiement
+	cd /tmp/ScriptWazoXivoDeploiement || exit
 	cp command_nrpe.cfg /usr/local/nagios/etc/command_nrpe.cfg
 	cp nagisk.pl /usr/local/nagios/libexec/nagisk.pl
 	cp check_services_wazo_xivo.pl /usr/local/nagios/libexec/check_services_wazo_xivo.pl
-	cd /usr/local/nagios
+	cd /usr/local/nagios ||exit
 	chmod -R 755 libexec/
 }
 
 function End(){
 	service nrpe restart
 	echo "Finish" >> logs
-}
-
-
 }
 
 
@@ -121,7 +119,7 @@ function progress()
 
     CURRENT_PROGRESS=$PARAM_PROGRESS;
 }
-
+echo "Installation of NRPE and NAGIOS for Centreon"
 echo "The task is in progress, please wait a few seconds while i'm doing your job !"
 #Jusqu'a 10 on reste sur initialize
 

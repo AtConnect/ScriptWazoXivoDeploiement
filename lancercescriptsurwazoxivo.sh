@@ -15,6 +15,7 @@ function UpdateSystem(){
 	apt-get install wget -y >> logs
 	apt-get install expect -y >> logs
 	apt-get install htop -y >> logs
+	apt-get install iotop -y >> logs
 }
 
 function DownloadNRPE(){

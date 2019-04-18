@@ -18,22 +18,22 @@ function UpdateSystem(){
 
 function DownloadNRPE(){
 	cd /tmp || exit
-	wget --no-check-certificate -q -O nrpe.tar.gz https://github.com/NagiosEnterprises/nrpe/archive/nrpe-3.2.1.tar.gz >> logs
+	wget --no-check-certificate -q -O nrpe.tar.gz https://github.com/NagiosEnterprises/nrpe/archive/nrpe-3.2.1.tar.gz >>/dev/null 2>logs
 	tar xzf nrpe.tar.gz >> logs
 	cd /tmp/nrpe-nrpe-3.2.1/
 }
 
 function InstallNRPE(){
 	echo "Install BINARIES and more" >> logs
-	./configure --enable-command-args >> logs
-	make all >> logs
-	make install-groups-users >> logs
-	make install >> logs
-	make install-config >> logs
+	./configure --enable-command-args >>/dev/null 2>logs
+	make all >>/dev/null 2>logs
+	make install-groups-users >>/dev/null 2>logs
+	make install >>/dev/null 2>logs
+	make install-config >>/dev/null 2>logs
 	echo >> /etc/services
 	echo '# Nagios services' >> /etc/services
 	echo 'nrpe    5666/tcp' >> /etc/services
-	make install-init >> logs
+	make install-init >>/dev/null 2>logs
 	systemctl enable nrpe.service >> logs
 }
 
@@ -55,18 +55,24 @@ function ConfigNRPE(){
 
 function NRPEPlugins(){
 	echo "Install NRPE plugins for NRPE" >> logs
-	apt-get install -y autoconf automake gcc libc6 libmcrypt-dev make libssl-dev wget bc gawk dc build-essential snmp libnet-snmp-perk gettext >> logs
+	apt-get install bc -y >> logs
+	apt-get install gawk -y >> logs
+	apt-get install dc -y >> logs
+	apt-get install build-essential -y >> logs
+	apt-get install snmp -y >> logs
+	apt-get install libnet-snmp-perk -y >> logs
+	apt-get install gettext -y >> logs
 	cd /tmp || exit
-	wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.2.1.tar.gz >> logs
+	wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.2.1.tar.gz >>/dev/null 2>logs
 	tar zxf nagios-plugins.tar.gz >> logs
 }
 
 function ConfigNRPEPlugins(){
 	cd /tmp/nagios-plugins-release-2.2.1/ || exit
-	./tools/setup >> logs
-	./configure >> logs
-	make >> logs
-	make install >> logs
+	./tools/setup >>/dev/null 2>logs
+	./configure >>/dev/null 2>logs
+	make >>/dev/null 2>logs
+	make install >>/dev/null 2>logs
 }
 
 function ConfSudoers(){

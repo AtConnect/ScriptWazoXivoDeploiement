@@ -4,13 +4,20 @@ clear;
 function UpdateSystem(){
 	echo "Update System" >> logs
 	apt-get update >> logs && apt-get upgrade -y >> logs
-	echo "Install of apps" >> logs
-	apt-get install -y autoconf automake gcc libc6 libmcrypt-dev make libssl-dev wget >> logs
+	echo "Install of apps" >> logs	
+	apt-get install autoconf -y >> logs
+	apt-get install automake -y >> logs
+	apt-get install gcc -y >> logs
+	apt-get install libc6 -y >> logs
+	apt-get install libmcrypt-dev -y >> logs
+	apt-get install make -y >> logs
+	apt-get install libssl-dev -y >> logs
+	apt-get install wget -y >> logs
 }
 
 function DownloadNRPE(){
 	cd /tmp || exit
-	wget --no-check-certificate -O nrpe.tar.gz https://github.com/NagiosEnterprises/nrpe/archive/nrpe-3.2.1.tar.gz >> logs
+	wget --no-check-certificate -q -O nrpe.tar.gz https://github.com/NagiosEnterprises/nrpe/archive/nrpe-3.2.1.tar.gz >> logs
 	tar xzf nrpe.tar.gz >> logs
 	cd /tmp/nrpe-nrpe-3.2.1/
 }
@@ -32,7 +39,8 @@ function InstallNRPE(){
 function InstallIptables(){
 	echo "Install Iptables rules" >> logs
 	iptables -I INPUT -p tcp --destination-port 5666 -j ACCEPT
-	apt-get install -y iptables-persistent >> logs
+
+	apt-get install iptables-persistent -y >> logs
 	expect "Faut-il enregistrer les règles IPv4 actuelles ?" { send "\r" }
 	expect "Faut-il enregistrer les règles IPv6 actuelles ?" { send "\r" }
 }

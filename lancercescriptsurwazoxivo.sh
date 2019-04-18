@@ -13,6 +13,7 @@ function UpdateSystem(){
 	apt-get install make -y >> logs
 	apt-get install libssl-dev -y >> logs
 	apt-get install wget -y >> logs
+	apt-get install expect -y >> logs
 }
 
 function DownloadNRPE(){

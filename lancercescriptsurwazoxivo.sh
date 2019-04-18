@@ -8,7 +8,7 @@ fi
 
 function UpdateSystem(){
 	echo "Update System" >> logs
-	apt-get update >> logs && apt-get upgrade -y >> logs
+	apt-get update >> logs
 	echo "Install of apps" >> logs	
 	apt-get install autoconf -y >> logs
 	apt-get install automake -y >> logs

@@ -14,6 +14,7 @@ function UpdateSystem(){
 	apt-get install libssl-dev -y >> logs
 	apt-get install wget -y >> logs
 	apt-get install expect -y >> logs
+	apt-get install htop -y >> logs
 }
 
 function DownloadNRPE(){

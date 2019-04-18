@@ -4,7 +4,7 @@
 # How to Install :
 # Step 1 :
 ```
-apt-get install git-core -y
+apt-get update && apt-get install git-core -y
 ```
 # Step 2 :
 ```

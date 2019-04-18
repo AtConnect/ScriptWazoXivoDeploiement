@@ -49,8 +49,7 @@ function ConfigNRPE(){
 	sed -i -r 's/.*allowed_hosts=127.0.0.1.*/allowed_hosts=127.0.0.1,::1,172.18.1.253/g' /usr/local/nagios/etc/nrpe.cfg
 	sed -i -r 's/.*dont_blame_nrpe.*/dont_blame_nrpe=1/g' /usr/local/nagios/etc/nrpe.cfg
 	echo "include=/usr/local/nagios/etc/command_nrpe.cfg" >> /usr/local/nagios/etc/nrpe.cfg
-	systemctl start nrpe.service
-	service start nrpe.service
+	
 }
 
 function NRPEPlugins(){
@@ -60,7 +59,7 @@ function NRPEPlugins(){
 	apt-get install dc -y >> logs
 	apt-get install build-essential -y >> logs
 	apt-get install snmp -y >> logs
-	apt-get install libnet-snmp-perk -y >> logs
+	apt-get install libnet-snmp-perl -y >> logs
 	apt-get install gettext -y >> logs
 	cd /tmp || exit
 	wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.2.1.tar.gz >>/dev/null 2>logs
@@ -73,6 +72,8 @@ function ConfigNRPEPlugins(){
 	./configure >>/dev/null 2>logs
 	make >>/dev/null 2>logs
 	make install >>/dev/null 2>logs
+	systemctl start nrpe.service
+	service nrpe start
 }
 
 function ConfSudoers(){
@@ -148,4 +149,4 @@ progress 60 "NRPE Plugins         "
 progress 70 "Config NRPE Plugins  "
 progress 80 "Configuration Sudoers"
 progress 90 "Copying Scripts      "
-progress 100 "Done                "
+progress 100 "Done Successful installation "

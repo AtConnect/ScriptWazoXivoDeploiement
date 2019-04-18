@@ -2,6 +2,9 @@
 #Update and Upgrade of the system only if update has been run without problem
 clear
 VERSION=$(cat /etc/debian_version)
+if [[ "$VERSION" = 6.* ]]; then
+	exit;
+fi
 
 function UpdateSystem(){
 	echo "Update System" >> logs

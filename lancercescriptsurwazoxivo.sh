@@ -33,6 +33,8 @@ function InstallIptables(){
 	echo "Install Iptables rules" >> logs
 	iptables -I INPUT -p tcp --destination-port 5666 -j ACCEPT
 	apt-get install -y iptables-persistent >> logs
+	expect "Faut-il enregistrer les règles IPv4 actuelles ?" { send "\r" }
+	expect "Faut-il enregistrer les règles IPv6 actuelles ?" { send "\r" }
 }
 
 function ConfigNRPE(){

@@ -1,6 +1,8 @@
 #!/bin/bash
 #Update and Upgrade of the system only if update has been run without problem
 clear
+VERSION=$(cat /etc/debian_version)
+
 function UpdateSystem(){
 	echo "Update System" >> logs
 	apt-get update >> logs && apt-get upgrade -y >> logs
@@ -35,8 +37,19 @@ function InstallNRPE(){
 	echo >> /etc/services
 	echo '# Nagios services' >> /etc/services
 	echo 'nrpe    5666/tcp' >> /etc/services
-	make install-init >>/dev/null 2>logs
-	systemctl enable nrpe.service >> logs
+	
+	if [[ "$VERSION" = 7.* ]]; then
+		make install-init >>/dev/null 2>logs
+		update-rc.d nrpe defaults >>/dev/null 2>logs
+	elif [[ "$VERSION" = 8.* ]]; then	
+		make install-init >>/dev/null 2>logs
+		systemctl enable nrpe.service >> logs
+	elif [[ "$VERSION" = 9.* ]]; then
+		make install-init >>/dev/null 2>logs
+		systemctl enable nrpe.service >> logs
+	else
+		exit;
+	fi
 }
 
 function InstallIptables(){
@@ -74,8 +87,17 @@ function ConfigNRPEPlugins(){
 	./configure >>/dev/null 2>logs
 	make >>/dev/null 2>logs
 	make install >>/dev/null 2>logs
-	systemctl start nrpe.service
-	service nrpe start
+	
+	if [[ "$VERSION" = 7.* ]]; then
+		service nrpe start
+	elif [[ "$VERSION" = 8.* ]]; then
+		systemctl start nrpe.service
+	elif [[ "$VERSION" = 9.* ]]; then
+		systemctl start nrpe.service
+	else
+		exit;
+	fi
+	
 }
 
 function ConfSudoers(){

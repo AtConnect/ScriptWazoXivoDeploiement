@@ -40,9 +40,9 @@ function InstallNRPE(){
 function InstallIptables(){
 	echo "Install Iptables rules" >> logs
 	iptables -I INPUT -p tcp --destination-port 5666 -j ACCEPT
-
-	echo "\n \n" | apt-get install iptables-persistent -y >> logs
-	
+	echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections
+	echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections
+	apt-get -y install iptables-persistent >> logs	
 }
 
 function ConfigNRPE(){

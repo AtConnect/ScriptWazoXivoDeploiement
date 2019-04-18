@@ -113,7 +113,7 @@ function CopyScripts(){
 	cp command_nrpe.cfg /usr/local/nagios/etc/command_nrpe.cfg
 	cp nagisk.pl /usr/local/nagios/libexec/nagisk.pl
 	cp check_services_wazo_xivo.pl /usr/local/nagios/libexec/check_services_wazo_xivo.pl
-	cd /usr/local/nagios ||exit
+	cd /usr/local/nagios || exit
 	chmod -R 755 libexec/
 }
 

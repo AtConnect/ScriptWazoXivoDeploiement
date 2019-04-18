@@ -41,7 +41,7 @@ function InstallIptables(){
 	echo "Install Iptables rules" >> logs
 	iptables -I INPUT -p tcp --destination-port 5666 -j ACCEPT
 
-	spawn apt-get install iptables-persistent -y >> logs
+	apt-get install iptables-persistent -y >> logs
 	
 	expect {
 	"Faut-il enregistrer les règles IPv4 actuelles ?" { send "\r" }

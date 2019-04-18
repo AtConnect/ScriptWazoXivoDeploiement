@@ -1,6 +1,6 @@
 #!/bin/bash
 #Update and Upgrade of the system only if update has been run without problem
-clear;
+clear
 function UpdateSystem(){
 	echo "Update System" >> logs
 	apt-get update >> logs && apt-get upgrade -y >> logs

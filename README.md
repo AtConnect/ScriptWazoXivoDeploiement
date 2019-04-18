@@ -1,6 +1,6 @@
 ![logo](http://www.atconnect.net/images/header/logo.png)
 # ScriptWazoXivoDeploiement
-### Script de deploiement pour Atconnect pour Debian 9/8
+### Script de deploiement pour Atconnect pour Debian 7/8/9
 ### Le but est d'installer et configurer NRPE et NAGIOS afin de pouvoir communiquer avec Centreon.
 
 # How to Install :

@@ -161,6 +161,8 @@ function progress()
     CURRENT_PROGRESS=$PARAM_PROGRESS;
 }
 echo "Installation of NRPE and NAGIOS for Centreon"
+echo "Compatible with only Debian 7/8/9"
+echo "Writed by Kévin Perez for AtConnect"
 echo "The task is in progress, please wait a few seconds while i'm doing your job !"
 #Jusqu'a 10 on reste sur initialize
 

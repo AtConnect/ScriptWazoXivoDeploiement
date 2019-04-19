@@ -114,6 +114,7 @@ function CopyScripts(){
 	cp nagisk.pl /usr/local/nagios/libexec/nagisk.pl
 	cp check_services_wazo_xivo.pl /usr/local/nagios/libexec/check_services_wazo_xivo.pl
 	cp checkversionwazoxivo.sh /usr/local/nagios/libexec/checkversionwazoxivo.sh
+	cp checkuptimewazoxivo.sh /usr/local/nagios/libexec/checkuptimewazoxivo.sh
 	cd /usr/local/nagios || exit
 	chmod -R 755 libexec/
 }

@@ -110,11 +110,11 @@ function ConfSudoers(){
 function CopyScripts(){
 	echo "Installation des scripts wazo/xivo" >> logs
 	cd /tmp/ScriptWazoXivoDeploiement || exit
-	cp command_nrpe.cfg /usr/local/nagios/etc/command_nrpe.cfg
-	cp nagisk.pl /usr/local/nagios/libexec/nagisk.pl
-	cp check_services_wazo_xivo.pl /usr/local/nagios/libexec/check_services_wazo_xivo.pl
-	cp checkversionwazoxivo.sh /usr/local/nagios/libexec/checkversionwazoxivo.sh
-	cp checkuptimewazoxivo.sh /usr/local/nagios/libexec/checkuptimewazoxivo.sh
+	cp commandnrpe/command_nrpe.cfg /usr/local/nagios/etc/command_nrpe.cfg
+	cp base/nagisk.pl /usr/local/nagios/libexec/nagisk.pl
+	cp base/check_services_wazo_xivo.pl /usr/local/nagios/libexec/check_services_wazo_xivo.pl
+	cp base/checkversionwazoxivo.sh /usr/local/nagios/libexec/checkversionwazoxivo.sh
+	cp base/checkuptimewazoxivo.sh /usr/local/nagios/libexec/checkuptimewazoxivo.sh
 	cd /usr/local/nagios || exit
 	chmod -R 755 libexec/
 }

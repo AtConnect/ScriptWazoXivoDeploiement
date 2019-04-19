@@ -16,3 +16,6 @@ git clone https://github.com/AtConnect/ScriptWazoXivoDeploiement ScriptWazoXivoD
 cd ScriptWazoXivoDeploiement
 chmod a+x lancercescriptsurwazoxivo.sh && ./lancercescriptsurwazoxivo.sh
 ```
+# You have make a modification for a NONE
+# How to Install :
+### Step 1 :

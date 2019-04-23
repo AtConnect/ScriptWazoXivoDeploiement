@@ -71,8 +71,11 @@ function DownloadNRPE(){
 
 function InstallNRPE(){
 	cd /tmp/nrpe-nrpe-3.2.1/
+	echo "james"
 	./configure
+	echo "james2"
 	make all >>/dev/null 2>logs
+	echo "james3"
 	make install-groups-users >>/dev/null 2>logs
 	make install >>/dev/null 2>logs
 	make install-config >>/dev/null 2>logs

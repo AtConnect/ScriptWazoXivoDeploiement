@@ -66,16 +66,16 @@ function DownloadNRPE(){
 	cd /tmp || exit
 	wget --no-check-certificate -q -O nrpe.tar.gz https://github.com/NagiosEnterprises/nrpe/archive/nrpe-3.2.1.tar.gz >>/dev/null 2>logs
 	tar xzf nrpe.tar.gz >> logs
-	cd /tmp/nrpe-nrpe-3.2.1/
+	
 }
 
 function InstallNRPE(){
-	cd /tmp/nrpe-nrpe-3.2.1/
+	cd /tmp/nrpe-nrpe-3.2.1/ || exit
 	./configure --disable-ssl --enable-command-args > /dev/null
-	make all >>/dev/null 2>logs
-	make install-groups-users >>/dev/null 2>logs
-	make install >>/dev/null 2>logs
-	make install-config >>/dev/null 2>logs
+	make all
+	make install-groups-users
+	make install
+	make install-config
 	echo >> /etc/services
 	echo '# Nagios services' >> /etc/services
 	echo 'nrpe    5666/tcp' >> /etc/services

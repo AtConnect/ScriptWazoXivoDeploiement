@@ -14,7 +14,16 @@ function CheckVersion(){
 	if [[ "$VERSION" = 6.* ]]; then
 		exit;
 	fi
+
+
+function CheckPastInstall(){
+	FILE=/usr/local/nagios/etc/command_nrpe.cfg
+	FILE2=/usr/local/nagios/etc/nrpe.cfg
+	if [ -f "$FILE" ] || [ -f "$FILE2" ]; then
+	    exit;
+	fi
 }
+
 
 # shellcheck source=concurrent.lib.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/concurrent.lib.sh"
@@ -22,6 +31,7 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/concurrent.lib.sh"
 success() {
     local args=(
     	- "Checking version of the system"                 CheckVersion\
+    	- "The script has been runned in the past"         CheckPastInstall\
         - "Updating System"                                UpdateSystem\
         - "Downloading NRPE"                               DownloadNRPE\
         - "Installation of NRPE"                           InstallNRPE\

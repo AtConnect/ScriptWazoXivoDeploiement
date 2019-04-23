@@ -71,27 +71,7 @@ function DownloadNRPE(){
 
 function InstallNRPE(){
 	cd /tmp/nrpe-nrpe-3.2.1/
-	./configure --prefix=/usr/local/nagios/ --enable-ssl --with-log-facility --enable-command-args --enable-threads=posix --with-trusted-path=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/nagios/bin:/usr/local/nagios/libexec
-	make all >>/dev/null 2>logs
-	make install-groups-users >>/dev/null 2>logs
-	make install >>/dev/null 2>logs
-	make install-config >>/dev/null 2>logs
-	echo >> /etc/services
-	echo '# Nagios services' >> /etc/services
-	echo 'nrpe    5666/tcp' >> /etc/services
-	
-	if [[ "$VERSION" = 7.* ]]; then
-		make install-init >>/dev/null 2>logs
-		update-rc.d nrpe defaults >>/dev/null 2>logs
-	elif [[ "$VERSION" = 8.* ]]; then	
-		make install-init >>/dev/null 2>logs
-		systemctl enable nrpe.service >> logs
-	elif [[ "$VERSION" = 9.* ]]; then
-		make install-init >>/dev/null 2>logs
-		systemctl enable nrpe.service >> logs
-	else
-		exit;
-	fi
+	echo "ok"
 }
 
 function InstallIptables(){

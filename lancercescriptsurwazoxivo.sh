@@ -70,8 +70,21 @@ function DownloadNRPE(){
 }
 
 function InstallNRPE(){
-	cd /tmp/nrpe-nrpe-3.2.1/
-	echo "ok"
+	source test.sh
+	
+	
+	if [[ "$VERSION" = 7.* ]]; then
+		make install-init >>/dev/null 2>logs
+		update-rc.d nrpe defaults >>/dev/null 2>logs
+	elif [[ "$VERSION" = 8.* ]]; then	
+		make install-init >>/dev/null 2>logs
+		systemctl enable nrpe.service >> logs
+	elif [[ "$VERSION" = 9.* ]]; then
+		make install-init >>/dev/null 2>logs
+		systemctl enable nrpe.service >> logs
+	else
+		exit;
+	fi
 }
 
 function InstallIptables(){

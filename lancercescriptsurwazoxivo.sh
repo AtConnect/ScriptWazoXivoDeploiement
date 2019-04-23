@@ -4,14 +4,16 @@ set -e -o pipefail
 
 #Update of the system only if update has been run without problem
 clear
-
+VERSION=$(cat /etc/debian_version)
+if [[ "$VERSION" = 6.* ]]; then
+	exit;
+fi
 
 # shellcheck source=concurrent.lib.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/concurrent.lib.sh"
 
 success() {
     local args=(
-    	- "Checking System Version"                        CheckVersion\
         - "Updating System"                                UpdateSystem\
         - "Downloading NRPE"                               DownloadNRPE\
         - "Installation of NRPE"                           InstallNRPE\
@@ -29,12 +31,7 @@ success() {
     concurrent "${args[@]}"
 }
 
-function CheckVersion(){
-	VERSION=$(cat /etc/debian_version)
-	if [[ "$VERSION" = 6.* ]]; then
-		exit;
-	fi
-}
+
 
 function UpdateSystem(){
 	echo "Update System" >> logs

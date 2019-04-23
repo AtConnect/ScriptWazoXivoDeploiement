@@ -1,10 +1,37 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+set -e -o pipefail
+
 #Update of the system only if update has been run without problem
 clear
 VERSION=$(cat /etc/debian_version)
 if [[ "$VERSION" = 6.* ]]; then
 	exit;
 fi
+
+# shellcheck source=concurrent.lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/concurrent.lib.sh"
+
+success() {
+    local args=(
+        - "Updating System"                                UpdateSystem\
+        - "Downloading NRPE"                               DownloadNRPE\
+        - "Installation of NRPE"                           InstallNRPE\
+        - "Installation of IPTables"                       InstallIptables\
+        - "Configuration of NRPE"                          ConfigNRPE\
+        - "Installation of NRPE Plugins"                   NRPEPlugins\
+        - "Configuration of NRPE Plugins"                  ConfigNRPEPlugins\
+        - "Configuration of Sudoers"                       ConfSudoers\
+        - "Copying Scripts for Centreon"                   CopyScripts\
+        - "End of Installation"                            End\
+        --sequential
+        
+    )
+
+    concurrent "${args[@]}"
+}
+
+
 
 function UpdateSystem(){
 	echo "Update System" >> logs
@@ -32,7 +59,8 @@ function DownloadNRPE(){
 
 function InstallNRPE(){
 	echo "Install BINARIES and more" >> logs
-	./configure --enable-command-args >>/dev/null 2>logs
+	cd /tmp/nrpe-nrpe-3.2.1/
+	./configure
 	make all >>/dev/null 2>logs
 	make install-groups-users >>/dev/null 2>logs
 	make install >>/dev/null 2>logs
@@ -125,59 +153,17 @@ function End(){
 }
 
 
-#
-# Description : delay executing script
-#
-function delay()
-{
-    sleep 0.2;
+main() {
+    if [[ -n "${1}" ]]; then
+        "${1}"
+    else
+        echo
+        echo "[SUCCESS EXAMPLE]"
+        success
+        echo
+        echo "[FAILURE EXAMPLE]"
+        failure
+    fi
 }
 
-#
-# Description : print out executing progress
-# 
-CURRENT_PROGRESS=0
-function progress()
-{
-    PARAM_PROGRESS=$1;
-    PARAM_PHASE=$2;
-
-    if [ $CURRENT_PROGRESS -le 0 -a $PARAM_PROGRESS -ge 0 ]  ; then echo -ne "[..........................] (0%)  $PARAM_PHASE \r"  ; UpdateSystem; fi;
-    if [ $CURRENT_PROGRESS -le 5 -a $PARAM_PROGRESS -ge 5 ]  ; then echo -ne "[#.........................] (5%)  $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 10 -a $PARAM_PROGRESS -ge 10 ]; then echo -ne "[##........................] (10%) $PARAM_PHASE \r"  ; DownloadNRPE; fi;
-    if [ $CURRENT_PROGRESS -le 15 -a $PARAM_PROGRESS -ge 15 ]; then echo -ne "[###.......................] (15%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 20 -a $PARAM_PROGRESS -ge 20 ]; then echo -ne "[####......................] (20%) $PARAM_PHASE \r"  ; InstallNRPE; fi;
-    if [ $CURRENT_PROGRESS -le 25 -a $PARAM_PROGRESS -ge 25 ]; then echo -ne "[#####.....................] (25%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 30 -a $PARAM_PROGRESS -ge 30 ]; then echo -ne "[######....................] (30%) $PARAM_PHASE \r"  ; InstallIptables; fi;
-    if [ $CURRENT_PROGRESS -le 35 -a $PARAM_PROGRESS -ge 35 ]; then echo -ne "[#######...................] (35%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 40 -a $PARAM_PROGRESS -ge 40 ]; then echo -ne "[########..................] (40%) $PARAM_PHASE \r"  ; ConfigNRPE; fi;
-    if [ $CURRENT_PROGRESS -le 45 -a $PARAM_PROGRESS -ge 45 ]; then echo -ne "[#########.................] (45%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 50 -a $PARAM_PROGRESS -ge 50 ]; then echo -ne "[##########................] (50%) $PARAM_PHASE \r"  ; NRPEPlugins; fi;
-    if [ $CURRENT_PROGRESS -le 55 -a $PARAM_PROGRESS -ge 55 ]; then echo -ne "[###########...............] (55%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 60 -a $PARAM_PROGRESS -ge 60 ]; then echo -ne "[############..............] (60%) $PARAM_PHASE \r"  ; ConfigNRPEPlugins; fi;
-    if [ $CURRENT_PROGRESS -le 65 -a $PARAM_PROGRESS -ge 65 ]; then echo -ne "[#############.............] (65%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 70 -a $PARAM_PROGRESS -ge 70 ]; then echo -ne "[###############...........] (70%) $PARAM_PHASE \r"  ; ConfSudoers; fi;
-    if [ $CURRENT_PROGRESS -le 75 -a $PARAM_PROGRESS -ge 75 ]; then echo -ne "[#################.........] (75%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 80 -a $PARAM_PROGRESS -ge 80 ]; then echo -ne "[####################......] (80%) $PARAM_PHASE \r"  ; CopyScripts; fi;
-    if [ $CURRENT_PROGRESS -le 85 -a $PARAM_PROGRESS -ge 85 ]; then echo -ne "[#######################...] (85%) $PARAM_PHASE \r"  ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 90 -a $PARAM_PROGRESS -ge 90 ]; then echo -ne "[##########################] (100%) $PARAM_PHASE \r" ; delay; fi;
-    if [ $CURRENT_PROGRESS -le 100 -a $PARAM_PROGRESS -ge 100 ];then echo -ne "[##########################] (100%) $PARAM_PHASE \n" ; End; fi;
-
-    CURRENT_PROGRESS=$PARAM_PROGRESS;
-}
-echo "Installation of NRPE and NAGIOS for Centreon"
-echo "Compatible with only Debian 7/8/9"
-echo "Writed by Kévin Perez for AtConnect"
-echo "The task is in progress, please wait a few seconds while i'm doing your job !"
-#Jusqu'a 10 on reste sur initialize
-
-progress 10 Initialize
-progress 20 "Download NRPE        "
-progress 30 "Install NRPE         "
-progress 40 "Install Iptables     "
-progress 50 "Config NRPE          "
-progress 60 "NRPE Plugins         "
-progress 70 "Config NRPE Plugins  "
-progress 80 "Configuration Sudoers"
-progress 90 "Copying Scripts      "
-progress 100 "Done Successful installation "
+main "${@}"

@@ -155,9 +155,9 @@ function End(){
 
 main() {
 echo "################################################################################" 
-echo "#               Installation of NRPE and NAGIOS for Centreon					 #"
-echo "#                     Compatible with Debian 7/8/9 only						 #"
-echo "#                    Writed by Kévin Perez for AtConnect						 #"
+echo "#               Installation of NRPE and NAGIOS for Centreon		     #"
+echo "#                     Compatible with Debian 7/8/9 only			     #"
+echo "#                    Writed by Kévin Perez for AtConnect			     #"
 echo "# The task is in progress, please wait a few seconds while i'm doing your job !#"
 echo "################################################################################" 
 echo "--------------------------------------------------------------------------------"

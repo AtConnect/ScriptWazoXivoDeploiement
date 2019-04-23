@@ -9,11 +9,19 @@ if [[ "$VERSION" = 6.* ]]; then
 	exit;
 fi
 
+function CheckVersion(){
+	VERSION=$(cat /etc/debian_version)
+	if [[ "$VERSION" = 6.* ]]; then
+		exit;
+	fi
+}
+
 # shellcheck source=concurrent.lib.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/concurrent.lib.sh"
 
 success() {
     local args=(
+    	- "Checking version of the system"                 CheckVersion\
         - "Updating System"                                UpdateSystem\
         - "Downloading NRPE"                               DownloadNRPE\
         - "Installation of NRPE"                           InstallNRPE\

@@ -4,25 +4,26 @@ set -e -o pipefail
 
 #Update of the system only if update has been run without problem
 clear
-
+VERSION=$(cat /etc/debian_version)
+if [[ "$VERSION" = 6.* ]]; then
+	exit;
+fi
 
 # shellcheck source=concurrent.lib.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/concurrent.lib.sh"
 
 success() {
     local args=(
-    	- "Verifying your version of system"                   VerifyVersion\
-    	- "Checking that's the first time your run the script" CheckFirstInstall\
-        - "Updating System"                                    UpdateSystem\
-        - "Downloading NRPE"                                   DownloadNRPE\
-        - "Installation of NRPE"                               InstallNRPE\
-        - "Installation of IPTables"                           InstallIptables\
-        - "Configuration of NRPE"                              ConfigNRPE\
-        - "Installation of NRPE Plugins"                       NRPEPlugins\
-        - "Configuration of NRPE Plugins"                      ConfigNRPEPlugins\
-        - "Configuration of Sudoers"                           ConfSudoers\
-        - "Copying Scripts for Centreon"                       CopyScripts\
-        - "End of Installation"                                End\
+        - "Updating System"                                UpdateSystem\
+        - "Downloading NRPE"                               DownloadNRPE\
+        - "Installation of NRPE"                           InstallNRPE\
+        - "Installation of IPTables"                       InstallIptables\
+        - "Configuration of NRPE"                          ConfigNRPE\
+        - "Installation of NRPE Plugins"                   NRPEPlugins\
+        - "Configuration of NRPE Plugins"                  ConfigNRPEPlugins\
+        - "Configuration of Sudoers"                       ConfSudoers\
+        - "Copying Scripts for Centreon"                   CopyScripts\
+        - "End of Installation"                            End\
         --sequential
         
     )
@@ -30,20 +31,7 @@ success() {
     concurrent "${args[@]}"
 }
 
-function VerifyVersion(){
-	VERSION=$(cat /etc/debian_version)
-	if [[ "$VERSION" = 6.* ]]; then
-		exit;
-	fi
-}
 
-function CheckFirstInstall(){
-	FILE=/usr/local/nagios/etc/command_nrpe.cfg
-	FILE2=/usr/local/nagios/etc/nrpe.cfg
-	if [ -f "$FILE" ] || [ -f "$FILE2" ]; then
-	   exit;
-	fi
-}
 
 function UpdateSystem(){
 	echo "Update System" >> logs
@@ -66,16 +54,17 @@ function DownloadNRPE(){
 	cd /tmp || exit
 	wget --no-check-certificate -q -O nrpe.tar.gz https://github.com/NagiosEnterprises/nrpe/archive/nrpe-3.2.1.tar.gz >>/dev/null 2>logs
 	tar xzf nrpe.tar.gz >> logs
-	
+	cd /tmp/nrpe-nrpe-3.2.1/
 }
 
 function InstallNRPE(){
-	cd /tmp/nrpe-nrpe-3.2.1/ || exit
-	./configure --disable-ssl --enable-command-args --enable-install-method=os > /dev/null
-	make all > /dev/null
-	make install-groups-users > /dev/null
-	make install > /dev/null
-	make install-config > /dev/null
+	echo "Install BINARIES and more" >> logs
+	cd /tmp/nrpe-nrpe-3.2.1/
+	./configure
+	make all >>/dev/null 2>logs
+	make install-groups-users >>/dev/null 2>logs
+	make install >>/dev/null 2>logs
+	make install-config >>/dev/null 2>logs
 	echo >> /etc/services
 	echo '# Nagios services' >> /etc/services
 	echo 'nrpe    5666/tcp' >> /etc/services
@@ -165,14 +154,16 @@ function End(){
 
 
 main() {
-echo "################################################################################" 
-echo -e "\033[45m#               Installation of NRPE and NAGIOS for Centreon                   #\033[0m"
-echo -e "\033[45m#                     Compatible with Debian 7/8/9 only                        #\033[0m"
-echo "#                    Writed by Kévin Perez for AtConnect                       #"
-echo "# The task is in progress, please wait a few minutes while i'm doing your job !#"
-echo "################################################################################" 
-echo "--------------------------------------------------------------------------------"
-success           
+    if [[ -n "${1}" ]]; then
+        "${1}"
+    else
+        echo
+        echo "[SUCCESS EXAMPLE]"
+        success
+        echo
+        echo "[FAILURE EXAMPLE]"
+        failure
+    fi
 }
 
 main "${@}"

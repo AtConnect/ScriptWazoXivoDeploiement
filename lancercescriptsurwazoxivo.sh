@@ -165,5 +165,3 @@ main() {
         failure
     fi
 }
-
-main "${@}"

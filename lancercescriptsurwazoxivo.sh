@@ -71,11 +71,11 @@ function DownloadNRPE(){
 
 function InstallNRPE(){
 	cd /tmp/nrpe-nrpe-3.2.1/ || exit
-	./configure --disable-ssl --enable-command-args > /dev/null
-	make all
-	make install-groups-users
-	make install
-	make install-config
+	./configure --disable-ssl --enable-command-args --enable-install-method=os > /dev/null
+	make all /dev/null
+	make install-groups-users /dev/null
+	make install /dev/null
+	make install-config /dev/null
 	echo >> /etc/services
 	echo '# Nagios services' >> /etc/services
 	echo 'nrpe    5666/tcp' >> /etc/services

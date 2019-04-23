@@ -70,8 +70,15 @@ function DownloadNRPE(){
 }
 
 function InstallNRPE(){
-	source test.sh
-	
+	cd /tmp/nrpe-nrpe-3.2.1/
+	./configure --enable-command-args >>/dev/null 2>logs
+	make all >>/dev/null 2>logs
+	make install-groups-users >>/dev/null 2>logs
+	make install >>/dev/null 2>logs
+	make install-config >>/dev/null 2>logs
+	echo >> /etc/services
+	echo '# Nagios services' >> /etc/services
+	echo 'nrpe    5666/tcp' >> /etc/services
 	
 	if [[ "$VERSION" = 7.* ]]; then
 		make install-init >>/dev/null 2>logs

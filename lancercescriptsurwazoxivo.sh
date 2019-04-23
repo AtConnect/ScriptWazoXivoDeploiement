@@ -71,11 +71,8 @@ function DownloadNRPE(){
 
 function InstallNRPE(){
 	cd /tmp/nrpe-nrpe-3.2.1/
-	echo "james"
-	./configure
-	echo "james2"
+	./configure --prefix=/usr/local/nagios/ --enable-ssl --with-log-facility --enable-command-args --enable-threads=posix --with-trusted-path=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/nagios/bin:/usr/local/nagios/libexec
 	make all >>/dev/null 2>logs
-	echo "james3"
 	make install-groups-users >>/dev/null 2>logs
 	make install >>/dev/null 2>logs
 	make install-config >>/dev/null 2>logs

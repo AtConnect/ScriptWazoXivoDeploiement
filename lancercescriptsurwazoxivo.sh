@@ -4,26 +4,25 @@ set -e -o pipefail
 
 #Update of the system only if update has been run without problem
 clear
-VERSION=$(cat /etc/debian_version)
-if [[ "$VERSION" = 6.* ]]; then
-	exit;
-fi
+
 
 # shellcheck source=concurrent.lib.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/concurrent.lib.sh"
 
 success() {
     local args=(
-        - "Updating System"                                UpdateSystem\
-        - "Downloading NRPE"                               DownloadNRPE\
-        - "Installation of NRPE"                           InstallNRPE\
-        - "Installation of IPTables"                       InstallIptables\
-        - "Configuration of NRPE"                          ConfigNRPE\
-        - "Installation of NRPE Plugins"                   NRPEPlugins\
-        - "Configuration of NRPE Plugins"                  ConfigNRPEPlugins\
-        - "Configuration of Sudoers"                       ConfSudoers\
-        - "Copying Scripts for Centreon"                   CopyScripts\
-        - "End of Installation"                            End\
+    	- "Verifying your version of system"                   VerifyVersion\
+    	- "Checking that's the first time your run the script" CheckFirstInstall\
+        - "Updating System"                                    UpdateSystem\
+        - "Downloading NRPE"                                   DownloadNRPE\
+        - "Installation of NRPE"                               InstallNRPE\
+        - "Installation of IPTables"                           InstallIptables\
+        - "Configuration of NRPE"                              ConfigNRPE\
+        - "Installation of NRPE Plugins"                       NRPEPlugins\
+        - "Configuration of NRPE Plugins"                      ConfigNRPEPlugins\
+        - "Configuration of Sudoers"                           ConfSudoers\
+        - "Copying Scripts for Centreon"                       CopyScripts\
+        - "End of Installation"                                End\
         --sequential
         
     )
@@ -31,7 +30,20 @@ success() {
     concurrent "${args[@]}"
 }
 
+function VerifyVersion(){
+	VERSION=$(cat /etc/debian_version)
+	if [[ "$VERSION" = 6.* ]]; then
+		exit;
+	fi
+}
 
+function CheckFirstInstall(){
+	FILE=/usr/local/nagios/etc/command_nrpe.cfg
+	FILE2=/usr/local/nagios/etc/nrpe.cfg
+	if [ -f "$FILE" ] || [ -f "$FILE2" ]; then
+	   exit;
+	fi
+}
 
 function UpdateSystem(){
 	echo "Update System" >> logs

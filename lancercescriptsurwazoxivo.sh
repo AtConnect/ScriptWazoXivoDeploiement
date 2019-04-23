@@ -158,11 +158,15 @@ main() {
         "${1}"
     else
         echo
-        echo "[SUCCESS EXAMPLE]"
+        echo "################################################################################" 
+		echo -e "\033[45m#               Installation of NRPE and NAGIOS for Centreon                   #\033[0m"
+		echo -e "\033[45m#                     Compatible with Debian 7/8/9 only                        #\033[0m"
+		echo "#                    Writed by Kévin Perez for AtConnect                       #"
+		echo "# The task is in progress, please wait a few minutes while i'm doing your job !#"
+		echo "################################################################################" 
+		echo "--------------------------------------------------------------------------------"
         success
-        echo
-        echo "[FAILURE EXAMPLE]"
-        failure
+        
     fi
 }
 

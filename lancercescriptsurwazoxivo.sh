@@ -68,7 +68,7 @@ function DownloadNRPE(){
 function InstallNRPE(){
 	echo "Install BINARIES and more" >> logs
 	cd /tmp/nrpe-nrpe-3.2.1/
-	./configure
+	./configure --enable-command-args
 	make all >>/dev/null 2>logs
 	make install-groups-users >>/dev/null 2>logs
 	make install >>/dev/null 2>logs

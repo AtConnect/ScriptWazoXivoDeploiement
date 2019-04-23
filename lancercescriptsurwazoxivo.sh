@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e -o pipefail
 
@@ -10,7 +10,7 @@ if [[ "$VERSION" = 6.* ]]; then
 fi
 
 # shellcheck source=concurrent.lib.sh
-source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/concurrent.lib.sh"
+source "/tmp/ScriptWazoXivoDeploiement/concurrent.lib.sh"
 
 success() {
     local args=(

@@ -66,12 +66,13 @@ function DownloadNRPE(){
 	cd /tmp || exit
 	wget --no-check-certificate -q -O nrpe.tar.gz https://github.com/NagiosEnterprises/nrpe/archive/nrpe-3.2.1.tar.gz >>/dev/null 2>logs
 	tar xzf nrpe.tar.gz >> logs
+	cd /tmp/nrpe-nrpe-3.2.1/
 }
 
 function InstallNRPE(){
 	echo "Install BINARIES and more" >> logs
-	cd /tmp/nrpe-nrpe-3.2.1/ 
-	./configure --enable-command-args >>/dev/null 2>logs
+	cd /tmp/nrpe-nrpe-3.2.1/
+	./configure
 	make all >>/dev/null 2>logs
 	make install-groups-users >>/dev/null 2>logs
 	make install >>/dev/null 2>logs

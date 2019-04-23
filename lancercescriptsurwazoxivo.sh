@@ -71,7 +71,7 @@ function DownloadNRPE(){
 
 function InstallNRPE(){
 	cd /tmp/nrpe-nrpe-3.2.1/
-	./configure --enable-command-args >>/dev/null 2>logs
+	./configure --disable-ssl --enable-command-args >>/dev/null 2>logs
 	make all >>/dev/null 2>logs
 	make install-groups-users >>/dev/null 2>logs
 	make install >>/dev/null 2>logs

@@ -24,6 +24,9 @@ chmod a+x lancercescriptsurwazoxivo.sh
 
 
 ## Versions
+- **2.5** Kévin Perez  
+  - *Fix:* `ssl` enable and force ssl
+  - *Fix:* `openssl` install to solve an error of ssl on certain system
 - **2.0** Kévin Perez
   - *New:* New design
   - *Fix:* `grammar error` in command_nrpe  

@@ -25,9 +25,9 @@ chmod a+x lancercescriptsurwazoxivo.sh
 
 ## Versions
 - **2.0** Kévin Perez
-  - *Fix:* `grammar error` in command_nrpe
-  - *Fix:* New design
-  - *Fix:* Stop the script if Debian 6
-  - *Fix:* Stop the script if a past install has been runned
+  - *New:* New design
+  - *Fix:* `grammar error` in command_nrpe  
+  - *Fix:* Stop the script if `Debian 6`
+  - *Fix:* Stop the script if a `past install` has been runned
 - **1.0** Kévin Perez
   - *New:* Repository deleted

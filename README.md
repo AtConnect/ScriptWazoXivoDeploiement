@@ -2,7 +2,7 @@
 
 This script has been writed by Kévin Perez for AtConnect Anglet
 
-[![asciicast](http://www.atconnect.net/images/header/logo.png)
+![asciicast](http://www.atconnect.net/images/header/logo.png)
 ![image](https://image.noelshack.com/fichiers/2019/17/3/1556112297-telechargement.png)
 
 ## Compatible with Debian 7/8/9 only.

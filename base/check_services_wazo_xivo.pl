@@ -39,6 +39,10 @@ if ($commandrequested eq "wazo-service"){
     $asterisk_command = $asterisk_command_wazo_services;
 }elsif($commandrequested eq "xivo-service"){
     $asterisk_command = $asterisk_command_xivo_services;
+}elsif($commandrequested eq "asterisk-xivo-service"){
+    $asterisk_command = $asterisk_command_xivo_services;
+}elsif($commandrequested eq "asterisk-wazo-service"){
+    $asterisk_command = $asterisk_command_wazo_services;
 }
 
 #------------------------------------------------------------------------------
@@ -136,7 +140,82 @@ if($commandrequested eq "wazo-service"){
 
 
         
+}elsif($commandrequested eq "asterisk-xivo-service") {
+
+        $return = $STA_CRITICAL;
+        $output = "Error getting services";
+
+        my $outputrunning = "";
+        my $outputrunningdown = "";
+        my $outputrunningup = "";
+        my @arraynoms = (`$asterisk_bin $asterisk_command | grep "asterisk" | awk '{print \$2}'`);
+        my @arraystatus = (`$asterisk_bin $asterisk_command | grep "asterisk"  | awk '{print \$1}'`);
+        
+        my @tableau;
+        my $nom = '';
+        my $status = '';           
+                        
+                $nom = $arraynoms[0];
+                $status = $arraystatus[0];      
+                $outputrunning = "Service $nom $status";                                       
+                push (@tableau, $outputrunning);
+        
+        
+        if($status == "running"){
+            $return = $STA_OK;
+            $outputrunningup = "Statut Astersik : OK\n";
+            print($outputrunningup);                       
+        }else{
+            $return = $STA_CRITICAL;
+            $outputrunningdown= "Statut Astersik : DOWN\n";
+            print($outputrunningup);
+        }
+
+        foreach $outputrunning (@tableau){
+            print ($outputrunning);
+        }
+
+
+        
+}elsif($commandrequested eq "asterisk-wazo-service") {
+
+        $return = $STA_CRITICAL;
+        $output = "Error getting services";
+
+        my $outputrunning = "";
+        my $outputrunningdown = "";
+        my $outputrunningup = "";
+        my @arraynoms = (`$asterisk_bin $asterisk_command | grep "asterisk" | awk '{print \$2}'`);
+        my @arraystatus = (`$asterisk_bin $asterisk_command | grep "asterisk"  | awk '{print \$1}'`);
+        
+        my @tableau;
+        my $nom = '';
+        my $status = '';           
+                        
+                $nom = $arraynoms[0];
+                $status = $arraystatus[0];      
+                $outputrunning = "Service $nom $status";                                       
+                push (@tableau, $outputrunning);
+        
+        
+        if($status == "running"){
+            $return = $STA_OK;
+            $outputrunningup = "Statut Astersik : OK\n";
+            print($outputrunningup);                       
+        }else{
+            $return = $STA_CRITICAL;
+            $outputrunningdown= "Statut Astersik : DOWN\n";
+            print($outputrunningup);
+        }
+
+        foreach $outputrunning (@tableau){
+            print ($outputrunning);
+        }
+
+
+        
 }
+
 
 
 

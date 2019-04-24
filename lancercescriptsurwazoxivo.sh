@@ -66,6 +66,7 @@ function UpdateSystem(){
 	apt-get install expect -y >> logs
 	apt-get install htop -y >> logs
 	apt-get install iotop -y >> logs
+	apt-get install openssl -y >> logs
 }
 
 function DownloadNRPE(){

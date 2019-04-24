@@ -1,6 +1,6 @@
 # Script déploiement Centreon pour Wazo/Xivo
 
-A Bash function to run tasks in parallel and display pretty output as they complete.
+This script has been writed by Kévin Perez for AtConnect Anglet
 
 [![asciicast](http://www.atconnect.net/images/header/logo.png)
 
@@ -22,10 +22,12 @@ chmod a+x lancercescriptsurwazoxivo.sh
 ./lancercescriptsurwazoxivo.sh
 ```
 
-- **2.0**
+
+## Versions
+- **2.0** Kévin Perez
   - *Fix:* `grammar error` in command_nrpe
   - *Fix:* New design
   - *Fix:* Stop the script if Debian 6
   - *Fix:* Stop the script if a past install has been runned
-- **1.0**
+- **1.0** Kévin Perez
   - *New:* Repository deleted

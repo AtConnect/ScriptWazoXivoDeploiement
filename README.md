@@ -6,7 +6,7 @@ This script has been writed by Kévin Perez for AtConnect Anglet
 
 
 ## Compatible with Debian 7/8/9 only.
-### Need Bash 4.2 at least to run.
+#### Need Bash 4.2 at least to run.
 
 # Step 1 - Run update and install git
 ```

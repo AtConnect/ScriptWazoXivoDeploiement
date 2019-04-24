@@ -10,7 +10,7 @@ This script has been writed by Kévin Perez for AtConnect Anglet
 
 # Step 1 - Run update and install git
 ```
-apt-get update && apt-get install git -y && apt-get install curl -y
+apt-get update && apt-get install git-core -y && apt-get install curl -y
 
 ```
 # Step 2 - Clone the repository and install it

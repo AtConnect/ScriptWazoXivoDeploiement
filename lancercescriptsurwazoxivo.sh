@@ -17,9 +17,9 @@ function CheckVersion(){
 
 }
 function CheckPastInstall(){
-	FILE=/usr/local/nagios/etc/command_nrpe.cfg
-	FILE2=/usr/local/nagios/etc/nrpe.cfg
-	if [ -f "$FILE" ] || [ -f "$FILE2" ]; then
+	FILE="/usr/local/nagios/etc/command_nrpe.cfg"
+	FILE2="/usr/local/nagios/etc/nrpe.cfg"
+	if [[ -f $FILE ]] || [[ -f $FILE2 ]]; then
 	    exit;
 	fi
 }

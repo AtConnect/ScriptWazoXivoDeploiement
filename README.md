@@ -3,7 +3,7 @@
 This script has been writed by Kévin Perez for AtConnect Anglet
 
 [![asciicast](http://www.atconnect.net/images/header/logo.png)
-
+[![asciicast](http://prntscr.com/ng9jcp)
 
 ## Compatible with Debian 7/8/9 only.
 #### Need Bash 4.2 at least to run.

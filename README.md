@@ -2,7 +2,7 @@
 
 A Bash function to run tasks in parallel and display pretty output as they complete.
 
-[![asciicast](https://asciinema.org/a/34219.png)](https://asciinema.org/a/34219)
+[![asciicast](http://www.atconnect.net/images/header/logo.png)
 
 
 ## Compatible with Debian 7/8/9 only.

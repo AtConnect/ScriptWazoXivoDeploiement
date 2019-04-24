@@ -71,7 +71,7 @@ function UpdateSystem(){
 
 function DownloadNRPE(){
 	cd /tmp || exit
-	wget --no-check-certificate -q -O nrpe.tar.gz https://github.com/NagiosEnterprises/nrpe/archive/nrpe-3.2.1.tar.gz >>/dev/null 2>logs
+	wget --no-check-certificate -q -O nrpe.tar.gz https://github.com/NagiosEnterprises/nrpe/archive/nrpe-3.2.1.tar.gz >> logs
 	tar xzf nrpe.tar.gz >> logs
 	cd /tmp/nrpe-nrpe-3.2.1/
 }
@@ -80,22 +80,22 @@ function InstallNRPE(){
 	echo "Install BINARIES and more" >> logs
 	cd /tmp/nrpe-nrpe-3.2.1/
 	./configure --enable-command-args --enable-ssl
-	make all >>/dev/null 2>logs
-	make install-groups-users >>/dev/null 2>logs
-	make install >>/dev/null 2>logs
-	make install-config >>/dev/null 2>logs
+	make all >>logs
+	make install-groups-users >> logs
+	make install >> logs
+	make install-config >> logs
 	echo >> /etc/services
 	echo '# Nagios services' >> /etc/services
 	echo 'nrpe    5666/tcp' >> /etc/services
 	
 	if [[ "$VERSION" = 7.* ]]; then
-		make install-init >>/dev/null 2>logs
-		update-rc.d nrpe defaults >>/dev/null 2>logs
+		make install-init >> logs
+		update-rc.d nrpe defaults >> logs
 	elif [[ "$VERSION" = 8.* ]]; then	
-		make install-init >>/dev/null 2>logs
+		make install-init >> logs
 		systemctl enable nrpe.service >> logs
 	elif [[ "$VERSION" = 9.* ]]; then
-		make install-init >>/dev/null 2>logs
+		make install-init >> logs
 		systemctl enable nrpe.service >> logs
 	else
 		exit;
@@ -127,16 +127,16 @@ function NRPEPlugins(){
 	apt-get install libnet-snmp-perl -y >> logs
 	apt-get install gettext -y >> logs
 	cd /tmp || exit
-	wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.2.1.tar.gz >>/dev/null 2>logs
+	wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.2.1.tar.gz >> logs
 	tar zxf nagios-plugins.tar.gz >> logs
 }
 
 function ConfigNRPEPlugins(){
 	cd /tmp/nagios-plugins-release-2.2.1/ || exit
-	./tools/setup >>/dev/null 2>logs
-	./configure >>/dev/null 2>logs
-	make >>/dev/null 2>logs
-	make install >>/dev/null 2>logs
+	./tools/setup >> logs
+	./configure >> logs
+	make >> logs
+	make install >> logs
 	
 	if [[ "$VERSION" = 7.* ]]; then
 		service nrpe start

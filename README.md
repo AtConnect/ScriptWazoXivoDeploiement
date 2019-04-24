@@ -14,13 +14,13 @@ apt-get update && apt-get install git-core -y && apt-get install curl -y
 
 ```
 # Step 2 - Clone the repository and install it
-`
+```
 cd /tmp
 git clone https://github.com/AtConnect/ScriptWazoXivoDeploiement
 cd ScriptWazoXivoDeploiement
 chmod a+x lancercescriptsurwazoxivo.sh
 ./lancercescriptsurwazoxivo.sh
-`
+```
 
 
 ## Versions

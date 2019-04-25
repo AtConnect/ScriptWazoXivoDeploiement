@@ -37,7 +37,7 @@ chmod a+x lancercescriptsurwazoxivo.sh
   - *New:* Repository deleted
 
 
-### Further information in the event that the xivo-five sources are outdated.
+### Further information in the event that the xivo-five sources are outdated */etc/apt/sources.list.d/xivo-dist.list* :
 ```
 deb http://mirror.xivo.solutions/debian/ xivo-five main
 deb http://mirror.xivo.solutions/debian/ xivo-five-candidate main

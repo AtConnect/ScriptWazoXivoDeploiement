@@ -37,19 +37,19 @@ chmod a+x lancercescriptsurwazoxivo.sh
   - *New:* Repository deleted
 
 
-# Further information in the event that the xivo-five sources are outdated.
+### Further information in the event that the xivo-five sources are outdated.
 ```
 deb http://mirror.xivo.solutions/debian/ xivo-five main
 deb http://mirror.xivo.solutions/debian/ xivo-five-candidate main
 deb http://mirror.xivo.solutions/debian/ xivo-five-oldstable main
 ```
 
-# If your key is outdated, update your key like that
+### If your key is outdated, update your key like that
 ```
 wget http://mirror.xivo.solutions/xivo_current.key -O - | apt-key add -
 ```
 
-# If you have a problem of *debian 8* sources list, reset */etc/apt/sources.list* to :
+### If you have a problem of *debian 8* sources list, reset */etc/apt/sources.list* to :
 ```
 deb http://ftp.fr.debian.org/debian/ jessie main
 deb http://security.debian.org/ jessie/updates main

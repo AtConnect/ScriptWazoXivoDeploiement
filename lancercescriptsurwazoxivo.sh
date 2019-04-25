@@ -6,7 +6,7 @@ set -e -o pipefail
 clear
 VERSION=$(cat /etc/debian_version)
 if [[ "$VERSION" = 6.* ]]; then
-	exit;
+	 exit 1;
 fi
 
 function CheckVersion(){
@@ -70,7 +70,7 @@ function UpdateSystem(){
 }
 
 function DownloadNRPE(){
-	cd /tmp || exit
+	cd /tmp || exit 1
 	wget --no-check-certificate -q -O nrpe.tar.gz https://github.com/NagiosEnterprises/nrpe/archive/nrpe-3.2.1.tar.gz >> logs
 	tar xzf nrpe.tar.gz >> logs
 	cd /tmp/nrpe-nrpe-3.2.1/
@@ -98,7 +98,7 @@ function InstallNRPE(){
 		make install-init >> logs
 		systemctl enable nrpe.service >> logs
 	else
-		exit;
+		 exit 1;
 	fi
 }
 
@@ -126,13 +126,13 @@ function NRPEPlugins(){
 	apt-get install snmp -y >> logs
 	apt-get install libnet-snmp-perl -y >> logs
 	apt-get install gettext -y >> logs
-	cd /tmp || exit
+	cd /tmp ||  exit 1
 	wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.2.1.tar.gz >> logs
 	tar zxf nagios-plugins.tar.gz >> logs
 }
 
 function ConfigNRPEPlugins(){
-	cd /tmp/nagios-plugins-release-2.2.1/ || exit
+	cd /tmp/nagios-plugins-release-2.2.1/ ||  exit 1
 	./tools/setup >> logs
 	./configure >> logs
 	make >> logs
@@ -145,7 +145,7 @@ function ConfigNRPEPlugins(){
 	elif [[ "$VERSION" = 9.* ]]; then
 		systemctl start nrpe.service
 	else
-		exit;
+		 exit 1;
 	fi
 	
 }
@@ -156,13 +156,13 @@ function ConfSudoers(){
 }
 function CopyScripts(){
 	echo "Installation des scripts wazo/xivo" >> logs
-	cd /tmp/ScriptWazoXivoDeploiement || exit
+	cd /tmp/ScriptWazoXivoDeploiement ||  exit 1
 	cp commandnrpe/command_nrpe.cfg /usr/local/nagios/etc/command_nrpe.cfg
 	cp base/nagisk.pl /usr/local/nagios/libexec/nagisk.pl
 	cp base/check_services_wazo_xivo.pl /usr/local/nagios/libexec/check_services_wazo_xivo.pl
 	cp base/checkversionwazoxivo.sh /usr/local/nagios/libexec/checkversionwazoxivo.sh
 	cp base/checkuptimewazoxivo.sh /usr/local/nagios/libexec/checkuptimewazoxivo.sh
-	cd /usr/local/nagios || exit
+	cd /usr/local/nagios ||  exit 1
 	chmod -R 755 libexec/
 }
 

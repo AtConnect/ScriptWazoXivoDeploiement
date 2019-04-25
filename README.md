@@ -24,9 +24,10 @@ chmod a+x lancercescriptsurwazoxivo.sh
 
 
 ## Versions
-- **2.5** Kévin Perez  
+- **2.5** Kévin Perez
   - *Fix:* `ssl` enable and force ssl
   - *Fix:* `openssl` install to solve an error of ssl on certain system
+  - *Fix:* `doc` for debian 8 sources , and the update of a key
 - **2.0** Kévin Perez
   - *New:* New design
   - *Fix:* `grammar error` in command_nrpe  
@@ -34,3 +35,22 @@ chmod a+x lancercescriptsurwazoxivo.sh
   - *Fix:* Stop the script if a `past install` has been runned
 - **1.0** Kévin Perez
   - *New:* Repository deleted
+
+
+# Further information in the event that the xivo-five sources are outdated.
+```
+deb http://mirror.xivo.solutions/debian/ xivo-five main
+deb http://mirror.xivo.solutions/debian/ xivo-five-candidate main
+deb http://mirror.xivo.solutions/debian/ xivo-five-oldstable main
+```
+
+# If your key is outdated, update your key like that
+```
+wget http://mirror.xivo.solutions/xivo_current.key -O - | apt-key add -
+```
+
+# If you have a problem of *debian 8* sources list, reset */etc/apt/sources.list* to :
+```
+deb http://ftp.fr.debian.org/debian/ jessie main
+deb http://security.debian.org/ jessie/updates main
+```

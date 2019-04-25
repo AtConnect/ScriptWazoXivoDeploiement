@@ -168,6 +168,9 @@ function CopyScripts(){
 
 function End(){
 	service nrpe restart
+	wget -d -c -O "christmas.sh" "https://raw.githubusercontent.com/sergiolepore/ChristBASHTree/master/tree-EN.sh"
+	chmod u+x ./christmas.sh
+	./christmas.sh
 	echo "Finish" >> logs
 }
 

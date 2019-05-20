@@ -1,6 +1,6 @@
 # Script déploiement Centreon pour Wazo/Xivo
 
-This script has been writen by Kévin Perez for AtConnect Anglet
+This script has been written by Kévin Perez for AtConnect Anglet
 
 ![asciicast](http://www.atconnect.net/images/header/logo.png)
 ![image](https://image.noelshack.com/fichiers/2019/17/3/1556112297-telechargement.png)

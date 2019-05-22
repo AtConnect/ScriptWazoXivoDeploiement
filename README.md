@@ -24,7 +24,7 @@ chmod a+x lancercescriptsurwazoxivo.sh
 
 
 ## Versions
-- **2.5** Kévin Perez for Atconnect
+- **2.5** Kévin Perez
   - *Fix:* `ssl` enable and force ssl
   - *Fix:* `openssl` install to solve an error of ssl on certain system
   - *Fix:* `doc` for debian 8 sources , and the update of a key

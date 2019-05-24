@@ -24,6 +24,8 @@ chmod a+x lancercescriptsurwazoxivo.sh
 
 
 ## Versions
+- **3.0** Kévin Perez
+  - *New:* `ip` allow the possibility to use other Centreon server
 - **2.5** Kévin Perez
   - *Fix:* `ssl` enable and force ssl
   - *Fix:* `openssl` install to solve an error of ssl on certain system

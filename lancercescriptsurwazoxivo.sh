@@ -3,6 +3,60 @@
 set -e -o pipefail
 
 #Update of the system only if update has been run without problem
+
+function check_ip()
+{    
+    if [[ $1 =~ ^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$ ]]; then    
+    result=true
+    else
+    result=false
+    fi
+}
+
+echo "Merci de choisir l'endroit ou effectuer l'installation"
+echo "1 -> Centreon Central"
+echo "2 -> Poller Adapei"
+echo "3 -> Poller ATC"
+echo "4 -> Poller Lisa2"
+echo "5 -> Un autre Poller ?"
+read -p "Entrez votre réponse : "  rep
+case $rep in
+1 )
+ip="195.135.72.13"
+echo "Le serveur selectionné est le Centron Central" 
+echo "L'adresse ip autorisée est 195.135.72.13"
+;;
+2 )
+ip="195.135.27.61"
+echo "Le serveur selectionné est le Poller Adapei" 
+echo "L'adresse ip autorisée est 195.135.27.61"
+;;
+3 )
+ip="195.135.40.134"
+echo "Le serveur selectionné est le Poller ATC" 
+echo "L'adresse ip autorisée est 195.135.40.134"
+;;
+4 )
+ip="65.39.76.144"
+echo "Le serveur selectionné est le Poller Lisa2" 
+echo "L'adresse ip autorisée est 65.39.76.144"
+;;
+5 )
+read -p "Entrez l'adresse IP du serveur : "  ip
+if [[ -n $ip ]]; then
+  check_ip $ip
+fi
+if [[ $result != "true" ]]; then
+  echo "Il serait de temps de connaitre la syntaxe d'une IP..."
+  exit 1
+fi
+echo "L'adresse ip autorisée est " $ip
+;;
+*)    echo "Read the Fucking Manual !"
+esac
+
+
+
 clear
 VERSION=$(cat /etc/debian_version)
 if [[ "$VERSION" = 6.* ]]; then
@@ -158,6 +212,7 @@ function CopyScripts(){
 	echo "Installation des scripts wazo/xivo" >> logs
 	cd /tmp/ScriptWazoXivoDeploiement ||  exit 1
 	cp commandnrpe/command_nrpe.cfg /usr/local/nagios/etc/command_nrpe.cfg
+	sed -i -r "s/.*allowed_hosts.*/allowed_hosts=127.0.0.1,::1,${ip}/g" /usr/local/nagios/etc/nrpe.cfg
 	cp base/nagisk.pl /usr/local/nagios/libexec/nagisk.pl
 	cp base/check_services_wazo_xivo.pl /usr/local/nagios/libexec/check_services_wazo_xivo.pl
 	cp base/checkversionwazoxivo.sh /usr/local/nagios/libexec/checkversionwazoxivo.sh

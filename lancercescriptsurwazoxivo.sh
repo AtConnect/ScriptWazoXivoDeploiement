@@ -13,6 +13,8 @@ function check_ip()
     fi
 }
 
+function menuip()
+{
 echo "Merci de choisir l'endroit ou effectuer l'installation"
 echo "1 -> Centreon Central"
 echo "2 -> Poller Adapei"
@@ -54,7 +56,8 @@ echo "L'adresse ip autorisée est " $ip
 ;;
 *)    echo "Read the Fucking Manual !"
 esac
-
+}
+menuip
 
 
 clear

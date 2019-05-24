@@ -15,44 +15,44 @@ function check_ip()
 
 function menuip()
 {
-echo "Merci de choisir l'endroit ou effectuer l'installation"
-echo "1 -> Centreon Central"
-echo "2 -> Poller Adapei"
-echo "3 -> Poller ATC"
-echo "4 -> Poller Lisa2"
-echo "5 -> Un autre Poller ?"
-read -p "Entrez votre réponse : "  rep
+echo "Please choose the location where you want to install"
+echo "1 -> Central Centreon "
+echo "2 -> Adapei Poller "
+echo "3 -> ATC Poller "
+echo "4 -> Lisa2 Poller "
+echo "5 -> Another Poller ?"
+read -p "Enter your answer : "  rep
 case $rep in
 1 )
 ip="195.135.72.13"
-echo "Le serveur selectionné est le Centron Central" 
-echo "L'adresse ip autorisée est 195.135.72.13"
+echo "The selected server is Central Centron" 
+echo "The authorized ip address is 195.135.72.13"
 ;;
 2 )
 ip="195.135.27.61"
-echo "Le serveur selectionné est le Poller Adapei" 
-echo "L'adresse ip autorisée est 195.135.27.61"
+echo "The selected server is Adapei Poller" 
+echo "The authorized ip address is 195.135.27.61"
 ;;
 3 )
 ip="195.135.40.134"
-echo "Le serveur selectionné est le Poller ATC" 
-echo "L'adresse ip autorisée est 195.135.40.134"
+echo "The selected server is ATC Poller" 
+echo "The authorized ip address is 195.135.40.134"
 ;;
 4 )
 ip="65.39.76.144"
-echo "Le serveur selectionné est le Poller Lisa2" 
-echo "L'adresse ip autorisée est 65.39.76.144"
+echo "The selected server is Lisa2 Poller " 
+echo "The authorized ip address is 65.39.76.144"
 ;;
 5 )
-read -p "Entrez l'adresse IP du serveur : "  ip
+read -p "Enter the ip address if the server : "  ip
 if [[ -n $ip ]]; then
   check_ip $ip
 fi
 if [[ $result != "true" ]]; then
-  echo "Il serait de temps de connaitre la syntaxe d'une IP..."
+  echo "It's time to know the syntax of an IP..."
   exit 1
 fi
-echo "L'adresse ip autorisée est " $ip
+echo "The authorized ip address is " $ip
 ;;
 *)    echo "Read the Fucking Manual !"
 esac

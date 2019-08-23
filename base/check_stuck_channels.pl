@@ -21,7 +21,7 @@ Usage: check_stuck_channels -w 1800 -c 3600 -h 0
 else {
 
     # Executing System Command for Asterisk to get Latest Information of Channels
-    @channels = `/usr/sbin/asterisk -rx "core show channels concise"`;
+    @channels = `/usr/bin/sudo /usr/sbin/asterisk -rx "core show channels concise"`;
 
     if($? == -1) {
         print "UNKNOWN - Unknown Channel Information is recieved!!."; 

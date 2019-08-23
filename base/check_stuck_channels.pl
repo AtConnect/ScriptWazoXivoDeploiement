@@ -55,7 +55,7 @@ else {
                 $channels_exceeded_limit++;
                 
                 if($hang_channel_if_limit_exceeded) {
-                    my $action = `/usr/sbin/asterisk -rx "channel request hangup $channel_id"`;
+                    my $action = `/usr/bin/sudo /usr/sbin/asterisk -rx "channel request hangup $channel_id"`;
                     if($? == -1) {
                         $channels_exceeded_limit_but_failed_to_hangup++;
                     }

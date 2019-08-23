@@ -24,6 +24,8 @@ chmod a+x lancercescriptsurwazoxivo.sh
 
 
 ## Versions
+- **3.1** Romain Boune
+  - *Fix:* `script wazo hangup` modified to be executed by root and not nagios user
 - **3.0** Kévin Perez
   - *New:* `ip` allow the possibility to use other Centreon server
 - **2.5** Kévin Perez
